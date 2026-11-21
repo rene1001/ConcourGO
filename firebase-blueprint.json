@@ -1,0 +1,244 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Profil utilisateur gamifié ConcoursGo (progression XP, séries, cœurs, gemmes, ligue).",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID Firebase Auth du propriétaire."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Nom affiché du candidat."
+        },
+        "avatarId": {
+          "type": "string",
+          "description": "Identifiant de l'avatar sélectionné."
+        },
+        "totalXp": {
+          "type": "integer",
+          "description": "Points d'expérience totaux cumulés."
+        },
+        "weeklyXp": {
+          "type": "integer",
+          "description": "Points d'expérience de la semaine en cours."
+        },
+        "currentStreak": {
+          "type": "integer",
+          "description": "Nombre de jours consécutifs d'entraînement."
+        },
+        "bestStreak": {
+          "type": "integer",
+          "description": "Meilleure série de jours consécutifs."
+        },
+        "hearts": {
+          "type": "integer",
+          "description": "Cœurs (vies) restants (0 à 5)."
+        },
+        "gems": {
+          "type": "integer",
+          "description": "Gemmes gagnées pour débloquer des bonus."
+        },
+        "dailyGoalXp": {
+          "type": "integer",
+          "description": "Objectif quotidien en XP."
+        },
+        "todayXp": {
+          "type": "integer",
+          "description": "XP gagnés aujourd'hui."
+        },
+        "lastActiveDate": {
+          "type": "string",
+          "description": "Date ISO (YYYY-MM-DD) de dernière activité."
+        },
+        "league": {
+          "type": "string",
+          "enum": ["Bronze", "Argent", "Or", "Diamant"],
+          "description": "Ligue actuelle du candidat."
+        },
+        "completedLevelsCount": {
+          "type": "integer",
+          "description": "Nombre de niveaux complétés."
+        },
+        "totalCorrect": {
+          "type": "integer",
+          "description": "Nombre total de bonnes réponses."
+        },
+        "totalAnswered": {
+          "type": "integer",
+          "description": "Nombre total de questions répondues."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Horodatage serveur de création (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Horodatage serveur de mise à jour (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "avatarId",
+        "totalXp",
+        "weeklyXp",
+        "currentStreak",
+        "bestStreak",
+        "hearts",
+        "gems",
+        "dailyGoalXp",
+        "todayXp",
+        "lastActiveDate",
+        "league",
+        "completedLevelsCount",
+        "totalCorrect",
+        "totalAnswered",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "LevelProgress": {
+      "title": "LevelProgress",
+      "description": "Progression par niveau QCM synchronisée pour un utilisateur.",
+      "type": "object",
+      "properties": {
+        "levelId": {
+          "type": "string",
+          "description": "Identifiant unique du niveau."
+        },
+        "unitId": {
+          "type": "string",
+          "description": "Identifiant de l'unité thématique."
+        },
+        "stars": {
+          "type": "integer",
+          "description": "Étoiles obtenues (0 à 3)."
+        },
+        "bestScore": {
+          "type": "integer",
+          "description": "Meilleur score en pourcentage (0 à 100)."
+        },
+        "attempts": {
+          "type": "integer",
+          "description": "Nombre de tentatives sur ce niveau."
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "Indique si le niveau a été validé."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Horodatage serveur de création (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Horodatage serveur de mise à jour (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "levelId",
+        "unitId",
+        "stars",
+        "bestScore",
+        "attempts",
+        "completed",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "Entrée publique du classement (sans PII).",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "UID Firebase Auth du candidat."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Nom ou pseudo affiché dans le classement."
+        },
+        "avatarId": {
+          "type": "string",
+          "description": "Identifiant de l'avatar."
+        },
+        "totalXp": {
+          "type": "integer",
+          "description": "XP total pour le classement général."
+        },
+        "weeklyXp": {
+          "type": "integer",
+          "description": "XP de la semaine pour le classement hebdomadaire."
+        },
+        "currentStreak": {
+          "type": "integer",
+          "description": "Série actuelle en jours."
+        },
+        "league": {
+          "type": "string",
+          "enum": ["Bronze", "Argent", "Or", "Diamant"],
+          "description": "Ligue du candidat."
+        },
+        "completedLevelsCount": {
+          "type": "integer",
+          "description": "Nombre de niveaux validés."
+        },
+        "publicVisible": {
+          "type": "boolean",
+          "description": "Visibilité dans le classement (true)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Horodatage serveur de création (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Horodatage serveur de mise à jour (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "avatarId",
+        "totalXp",
+        "weeklyXp",
+        "currentStreak",
+        "league",
+        "completedLevelsCount",
+        "publicVisible",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Profil gamifié privé de l'utilisateur."
+    },
+    "/users/{userId}/level_progress/{levelId}": {
+      "schema": {
+        "$ref": "#/entities/LevelProgress"
+      },
+      "description": "Progression par niveau QCM appartenant à l'utilisateur."
+    },
+    "/leaderboard/{userId}": {
+      "schema": {
+        "$ref": "#/entities/LeaderboardEntry"
+      },
+      "description": "Classement public des candidats (lecture authentifiée, écriture propriétaire)."
+    }
+  }
+}

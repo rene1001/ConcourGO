@@ -1,0 +1,146 @@
+<resources>
+    <string name="app_name">ConcoursGo</string>
+
+    <!-- Navigation -->
+    <string name="nav_path">Parcours</string>
+    <string name="nav_leaderboard">Classement</string>
+    <string name="nav_shop">Boutique</string>
+    <string name="nav_profile">Profil</string>
+
+    <!-- Boutique & Bictorys Payment -->
+    <string name="shop_title">Boutique &amp; Pass</string>
+    <string name="shop_subtitle">Débloque des gemmes et le Pass ConcoursGo via Bictorys (Mobile Money &amp; Carte)</string>
+    <string name="shop_sandbox_badge">Mode Test Bictorys</string>
+    <string name="shop_live_badge">Paiement Sécurisé Bictorys</string>
+    <string name="shop_pass_active">Pass ConcoursGo Actif</string>
+    <string name="shop_pass_inactive">Aucun Pass actif</string>
+    <string name="shop_packs_title">Choisis ton pack</string>
+    <string name="shop_method_title">Mode de paiement Bictorys</string>
+    <string name="shop_customer_title">Coordonnées du candidat</string>
+    <string name="shop_field_name">Nom complet</string>
+    <string name="shop_field_phone">Téléphone (ex: +22670000000)</string>
+    <string name="shop_field_email">Email (optionnel)</string>
+    <string name="shop_field_country">Pays</string>
+    <string name="shop_pay_button">Payer %1$d XOF avec Bictorys</string>
+    <string name="shop_pending_title">Paiement en attente de confirmation</string>
+    <string name="shop_pending_ref">Réf. %1$s • %2$d XOF</string>
+    <string name="shop_open_checkout">Ouvrir Bictorys</string>
+    <string name="shop_verify_status">Vérifier le statut</string>
+    <string name="shop_cancel_pending">Effacer</string>
+    <string name="shop_missing_key">Clé API Bictorys non configurée. Ajoute BICTORYS_PUBLIC_API_KEY dans le panneau Secrets d\'AI Studio.</string>
+    <string name="shop_open_profile_cta">Accéder à la Boutique &amp; Paiement Bictorys</string>
+
+    <!-- Auth & Onboarding -->
+    <string name="auth_title">ConcoursGo</string>
+    <string name="auth_subtitle">Prépare tes concours directs &amp; professionnels comme un jeu.</string>
+    <string name="auth_feature_qcm">120+ QCM corrigés &amp; commentés (BF &amp; AES)</string>
+    <string name="auth_feature_gamified">Niveaux, séries, cœurs, XP et ligues hebdomadaires</string>
+    <string name="auth_feature_offline">100% disponible hors-ligne avec synchronisation auto</string>
+    <string name="auth_google_button">Se connecter avec Google</string>
+    <string name="auth_offline_guest_button">Mode Hors-Ligne (S\'entraîner sans compte)</string>
+    <string name="auth_error_missing_config">Configuration Google Sign-In manquante.</string>
+    <string name="auth_error_generic">Connexion impossible. Réessaie ou utilise le mode hors-ligne.</string>
+
+    <!-- Top HUD & Status -->
+    <string name="hud_streak_cd">Série de jours</string>
+    <string name="hud_xp_cd">Points d\'expérience</string>
+    <string name="hud_gems_cd">Gemmes</string>
+    <string name="hud_hearts_cd">Cœurs restants</string>
+    <string name="status_online">En ligne</string>
+    <string name="status_offline_mode">Hors-ligne</string>
+    <string name="status_sync_pending">%1$d en attente</string>
+    <string name="daily_goal_title">Objectif du jour</string>
+    <string name="daily_goal_progress">%1$d / %2$d XP</string>
+    <string name="daily_goal_completed">Objectif atteint !</string>
+
+    <!-- Path & Levels -->
+    <string name="unit_label">UNITÉ %1$d</string>
+    <string name="level_start">Commencer</string>
+    <string name="level_replay">Rejouer (+%1$d XP)</string>
+    <string name="level_locked">Termine le niveau précédent pour débloquer</string>
+    <string name="level_boss_badge">DÉFI</string>
+    <string name="hearts_empty_title">Plus de cœurs !</string>
+    <string name="hearts_empty_message">Recharge tes 5 cœurs avec 40 gemmes ou fais une session de révision gratuite pour continuer.</string>
+    <string name="hearts_refill_gems">Recharger (40 gemmes)</string>
+    <string name="hearts_free_practice">Récupérer 5 cœurs (Gratuit)</string>
+    <string name="dialog_cancel">Fermer</string>
+
+    <!-- Quiz -->
+    <string name="quiz_close_cd">Quitter la session</string>
+    <string name="quiz_progress_cd">Progression du QCM : %1$d sur %2$d questions</string>
+    <string name="quiz_exit_title">Quitter l\'entraînement ?</string>
+    <string name="quiz_exit_message">Ta progression sur cette série sera perdue.</string>
+    <string name="quiz_exit_confirm">Quitter</string>
+    <string name="quiz_exit_stay">Continuer</string>
+    <string name="quiz_check_answer">VÉRIFIER</string>
+    <string name="quiz_continue">CONTINUER</string>
+    <string name="quiz_finish">TERMINER</string>
+    <string name="quiz_correct_banner">Excellent !</string>
+    <string name="quiz_wrong_banner">Presque !</string>
+    <string name="quiz_correct_answer_was">Bonne réponse : %1$s</string>
+    <string name="quiz_combo_badge">Série x%1$d</string>
+    <string name="quiz_summary_title">Niveau terminé !</string>
+    <string name="quiz_summary_failed_title">Continue tes efforts !</string>
+    <string name="quiz_summary_xp_label">XP gagnés</string>
+    <string name="quiz_summary_accuracy_label">Précision</string>
+    <string name="quiz_summary_gems_label">Gemmes</string>
+    <string name="quiz_summary_saved_offline">Enregistré hors-ligne (sera synchronisé)</string>
+    <string name="quiz_summary_synced_cloud">Synchronisé avec le classement</string>
+    <string name="quiz_summary_back_to_path">Retour au parcours</string>
+
+    <!-- Leaderboard -->
+    <string name="leaderboard_title">Classement &amp; Ligues</string>
+    <string name="leaderboard_subtitle">Gravis les échelons de Bronze à Diamant</string>
+    <string name="leaderboard_weekly">Semaine</string>
+    <string name="leaderboard_all_time">Total</string>
+    <string name="leaderboard_filter_all">Toutes</string>
+    <string name="leaderboard_offline_banner">Mode hors-ligne : affichage du dernier classement enregistré.</string>
+    <string name="leaderboard_guest_title">Classement en ligne verrouillé</string>
+    <string name="leaderboard_guest_desc">Connecte ton compte Google pour publier tes XP et affronter les autres candidats aux concours.</string>
+    <string name="leaderboard_empty">Aucun candidat dans cette ligue pour le moment. Sois le premier !</string>
+    <string name="leaderboard_you_badge">Toi</string>
+    <string name="leaderboard_refresh_cd">Actualiser le classement</string>
+    <string name="leaderboard_retry">Réessayer</string>
+    <string name="leaderboard_error_title">Classement indisponible</string>
+    <string name="leaderboard_error_load">Impossible de récupérer le classement depuis Firestore.</string>
+    <string name="leaderboard_your_rank">Ton rang actuel : #%1$d sur %2$d</string>
+    <string name="leaderboard_levels_count">%1$d niv.</string>
+    <string name="leaderboard_avatar_cd">Avatar de %1$s</string>
+
+    <!-- Profile, Offline & Notifications -->
+    <string name="profile_title">Profil &amp; Paramètres</string>
+    <string name="profile_current_streak_title">Série quotidienne actuelle</string>
+    <string name="profile_current_streak_days">%1$d jour(s) consécutif(s)</string>
+    <string name="profile_streak_active_today">Activité validée aujourd\'hui !</string>
+    <string name="profile_streak_protect_today">Termine un QCM aujourd\'hui pour prolonger ta série.</string>
+    <string name="profile_streak_start_today">Complète un niveau aujourd\'hui pour démarrer ta série.</string>
+    <string name="profile_stats_title">Tes statistiques</string>
+    <string name="profile_stat_xp">XP Total</string>
+    <string name="profile_stat_current_streak">Série actuelle</string>
+    <string name="profile_stat_streak">Meilleure série</string>
+    <string name="profile_stat_levels">Niveaux validés</string>
+    <string name="profile_stat_accuracy">Taux de réussite</string>
+    <string name="profile_badges_title">Trophées débloqués</string>
+    <string name="profile_offline_title">Mode Hors-Ligne</string>
+    <string name="profile_offline_desc">%1$d QCM disponibles sans connexion internet</string>
+    <string name="profile_offline_switch">Forcer le mode hors-ligne</string>
+    <string name="profile_sync_now">Synchroniser maintenant (%1$d)</string>
+    <string name="profile_sync_up_to_date">Tout est synchronisé</string>
+    <string name="profile_notif_title">Notifications quotidiennes</string>
+    <string name="profile_notif_desc">Reçois un rappel chaque jour pour protéger ta série.</string>
+    <string name="profile_notif_switch">Rappel quotidien actif</string>
+    <string name="profile_notif_time">Heure du rappel : %1$02d:%2$02d</string>
+    <string name="profile_notif_change_time">Modifier</string>
+    <string name="profile_notif_test">Tester la notification</string>
+    <string name="profile_notif_permission_needed">Autorise les notifications pour recevoir tes rappels quotidiens.</string>
+    <string name="profile_goal_title">Objectif XP quotidien</string>
+    <string name="profile_sign_out">Se déconnecter</string>
+    <string name="profile_connect_google">Connecter un compte Google</string>
+    <string name="profile_guest_label">Candidat Hors-Ligne</string>
+
+    <!-- Notifications -->
+    <string name="notif_channel_name">Rappels quotidiens ConcoursGo</string>
+    <string name="notif_channel_desc">Messages de motivation quotidiens pour réviser tes concours</string>
+    <string name="notif_default_title">C\'est l\'heure de ta série ConcoursGo !</string>
+    <string name="notif_default_body">5 minutes de QCM aujourd\'hui te rapprochent de la réussite au concours.</string>
+</resources>

@@ -1,0 +1,187 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net (Default-Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Shared Hardened Primitives
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidLeague(league) {
+      return league in ['Bronze', 'Argent', 'Or', 'Diamant'];
+    }
+
+    function isValidUserProfile(data) {
+      return data.userId is string &&
+             data.userId.size() >= 1 && data.userId.size() <= 128 &&
+             data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 60 &&
+             data.avatarId is string && data.avatarId.size() >= 1 && data.avatarId.size() <= 40 &&
+             data.totalXp is int && data.totalXp >= 0 && data.totalXp <= 10000000 &&
+             data.weeklyXp is int && data.weeklyXp >= 0 && data.weeklyXp <= 10000000 &&
+             data.currentStreak is int && data.currentStreak >= 0 && data.currentStreak <= 36500 &&
+             data.bestStreak is int && data.bestStreak >= 0 && data.bestStreak <= 36500 &&
+             data.hearts is int && data.hearts >= 0 && data.hearts <= 5 &&
+             data.gems is int && data.gems >= 0 && data.gems <= 1000000 &&
+             data.dailyGoalXp is int && data.dailyGoalXp >= 10 && data.dailyGoalXp <= 500 &&
+             data.todayXp is int && data.todayXp >= 0 && data.todayXp <= 100000 &&
+             data.lastActiveDate is string && data.lastActiveDate.size() <= 20 &&
+             data.league is string && isValidLeague(data.league) &&
+             data.completedLevelsCount is int && data.completedLevelsCount >= 0 && data.completedLevelsCount <= 1000 &&
+             data.totalCorrect is int && data.totalCorrect >= 0 && data.totalCorrect <= 1000000 &&
+             data.totalAnswered is int && data.totalAnswered >= 0 && data.totalAnswered <= 1000000 &&
+             data.createdAt is timestamp && data.createdAt <= request.time &&
+             data.updatedAt is timestamp && data.updatedAt <= request.time;
+    }
+
+    function isValidLevelProgress(data) {
+      return data.levelId is string && isValidId(data.levelId) &&
+             data.unitId is string && data.unitId.size() >= 1 && data.unitId.size() <= 40 &&
+             data.stars is int && data.stars >= 0 && data.stars <= 3 &&
+             data.bestScore is int && data.bestScore >= 0 && data.bestScore <= 100 &&
+             data.attempts is int && data.attempts >= 0 && data.attempts <= 10000 &&
+             data.completed is bool &&
+             data.createdAt is timestamp && data.createdAt <= request.time &&
+             data.updatedAt is timestamp && data.updatedAt <= request.time;
+    }
+
+    function isValidLeaderboardEntry(data) {
+      return data.userId is string &&
+             data.userId.size() >= 1 && data.userId.size() <= 128 &&
+             data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 60 &&
+             data.avatarId is string && data.avatarId.size() >= 1 && data.avatarId.size() <= 40 &&
+             data.totalXp is int && data.totalXp >= 0 && data.totalXp <= 10000000 &&
+             data.weeklyXp is int && data.weeklyXp >= 0 && data.weeklyXp <= 10000000 &&
+             data.currentStreak is int && data.currentStreak >= 0 && data.currentStreak <= 36500 &&
+             data.league is string && isValidLeague(data.league) &&
+             data.completedLevelsCount is int && data.completedLevelsCount >= 0 && data.completedLevelsCount <= 1000 &&
+             data.publicVisible is bool && data.publicVisible == true &&
+             data.createdAt is timestamp && data.createdAt <= request.time &&
+             data.updatedAt is timestamp && data.updatedAt <= request.time;
+    }
+
+    // 1. User Profile (/users/{userId})
+    match /users/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow list: if false;
+
+      allow create: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       incoming().userId == request.auth.uid &&
+                       incoming().keys().hasAll([
+                         'userId', 'displayName', 'avatarId', 'totalXp', 'weeklyXp',
+                         'currentStreak', 'bestStreak', 'hearts', 'gems', 'dailyGoalXp',
+                         'todayXp', 'lastActiveDate', 'league', 'completedLevelsCount',
+                         'totalCorrect', 'totalAnswered', 'createdAt', 'updatedAt'
+                       ]) &&
+                       incoming().keys().hasOnly([
+                         'userId', 'displayName', 'avatarId', 'totalXp', 'weeklyXp',
+                         'currentStreak', 'bestStreak', 'hearts', 'gems', 'dailyGoalXp',
+                         'todayXp', 'lastActiveDate', 'league', 'completedLevelsCount',
+                         'totalCorrect', 'totalAnswered', 'createdAt', 'updatedAt'
+                       ]) &&
+                       isValidUserProfile(incoming());
+
+      allow update: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       isValidUserProfile(incoming()) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().diff(existing()).affectedKeys().hasOnly([
+                         'displayName', 'avatarId', 'totalXp', 'weeklyXp',
+                         'currentStreak', 'bestStreak', 'hearts', 'gems', 'dailyGoalXp',
+                         'todayXp', 'lastActiveDate', 'league', 'completedLevelsCount',
+                         'totalCorrect', 'totalAnswered', 'updatedAt'
+                       ]);
+
+      allow delete: if isOwner(userId) && isValidId(userId);
+
+      // 2. Per-level progression subcollection (/users/{userId}/level_progress/{levelId})
+      match /level_progress/{levelId} {
+        allow get: if isOwner(userId) && isValidId(userId) && isValidId(levelId);
+        allow list: if isOwner(userId) && isValidId(userId);
+
+        allow create: if isOwner(userId) &&
+                         isValidId(userId) &&
+                         isValidId(levelId) &&
+                         incoming().levelId == levelId &&
+                         incoming().keys().hasAll([
+                           'levelId', 'unitId', 'stars', 'bestScore', 'attempts',
+                           'completed', 'createdAt', 'updatedAt'
+                         ]) &&
+                         incoming().keys().hasOnly([
+                           'levelId', 'unitId', 'stars', 'bestScore', 'attempts',
+                           'completed', 'createdAt', 'updatedAt'
+                         ]) &&
+                         isValidLevelProgress(incoming());
+
+        allow update: if isOwner(userId) &&
+                         isValidId(userId) &&
+                         isValidId(levelId) &&
+                         isValidLevelProgress(incoming()) &&
+                         incoming().levelId == existing().levelId &&
+                         incoming().unitId == existing().unitId &&
+                         incoming().createdAt == existing().createdAt &&
+                         incoming().diff(existing()).affectedKeys().hasOnly([
+                           'stars', 'bestScore', 'attempts', 'completed', 'updatedAt'
+                         ]);
+
+        allow delete: if isOwner(userId) && isValidId(userId) && isValidId(levelId);
+      }
+    }
+
+    // 3. Public Leaderboard (/leaderboard/{userId}) - PII-free
+    match /leaderboard/{userId} {
+      allow get: if isSignedIn() && isValidId(userId);
+      allow list: if isSignedIn() && resource.data.publicVisible == true;
+
+      allow create: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       incoming().userId == request.auth.uid &&
+                       incoming().keys().hasAll([
+                         'userId', 'displayName', 'avatarId', 'totalXp', 'weeklyXp',
+                         'currentStreak', 'league', 'completedLevelsCount', 'publicVisible',
+                         'createdAt', 'updatedAt'
+                       ]) &&
+                       incoming().keys().hasOnly([
+                         'userId', 'displayName', 'avatarId', 'totalXp', 'weeklyXp',
+                         'currentStreak', 'league', 'completedLevelsCount', 'publicVisible',
+                         'createdAt', 'updatedAt'
+                       ]) &&
+                       isValidLeaderboardEntry(incoming());
+
+      allow update: if isOwner(userId) &&
+                       isValidId(userId) &&
+                       isValidLeaderboardEntry(incoming()) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().diff(existing()).affectedKeys().hasOnly([
+                         'displayName', 'avatarId', 'totalXp', 'weeklyXp',
+                         'currentStreak', 'league', 'completedLevelsCount', 'publicVisible',
+                         'updatedAt'
+                       ]);
+
+      allow delete: if isOwner(userId) && isValidId(userId);
+    }
+  }
+}
